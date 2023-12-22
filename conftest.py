@@ -27,8 +27,8 @@ def driver(request):
         raise ValueError(f"Browser {browser} not supported")
 
     driver.get(url)
-    yield driver  # Це ключове слово return веб-драйвера для використання в тестах
-    driver.quit()  # Завершує сеанс після завершення тесту
+    yield driver
+    driver.quit()
 
 # options for pytest
 def pytest_addoption(parser):
