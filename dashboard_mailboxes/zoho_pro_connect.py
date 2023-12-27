@@ -1,9 +1,7 @@
 #zoho_pro_connect.py
 
 import pytest
-from pages.login_page import LoginPage
-from pages.mailbox_page import MailboxPage
-from config.settings import USER_CREDENTIALS
+from basic_commands.mailbox_page import MailboxPage
 from dashboard_mailboxes.mailbox_credentials import ZOHO_PRO_CREDENTIALS
 
 class ZohoProConnect(MailboxPage):

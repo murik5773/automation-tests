@@ -1,6 +1,15 @@
 # mailbox_credentials.py
 
 # Credentials for free Gmail
+
+# Credentials for free Gmail
+EXISTED_CREDENTIALS = {
+    "index": 0,
+    "provider": "gmail",
+    "email": "nicksikorsky9@gmail.com",
+    "password": "oxodemabppukavnb"
+}
+
 GMAIL_CREDENTIALS = {
     "index": 0,
     "provider": "gmail",
@@ -70,18 +79,19 @@ SENDGRID_CREDENTIALS = {
     "index": 8,
     "provider": "sendgrid",
     "valid": {
-        "email": "test.email.sendgrid@mihifan.com",
+        "email": "emmerson@emailrocket.live",
         "smtp_username": "apikey",
-        "smtp_password": "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",
+        "smtp_password": "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",
         "smtp_host": "smtp.sendgrid.net",
         "smtp_port": "587",
         "imap_username": "",
-        "imap_password": "",
-        "imap_host": "",
-        "imap_port": ""
+        "imap_password": "sictewffdhbjsiqp",
+        "imap_host": "imap.gmail.com",
+        "imap_port": "993"
     },
     "invalid": {
-        "email": "",
-        "password": ""
+        "email": "ammerson@emailrocket.live",
+        "smtp_password": "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",
+        "imap_password": "sictewffdhbjsiqk"
     }
 }

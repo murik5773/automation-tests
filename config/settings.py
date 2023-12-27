@@ -2,7 +2,7 @@
 
 # Basic environments
 BASE_URL = {
-    "local": "",
+    "testing": "https://testing.warmy.io/",
     "test": "https://test.warmy.io/signin",
     "staging": "https://staging.warmy.io/signin",
     "production": "https://www.warmy.io/signin"

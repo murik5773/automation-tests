@@ -1,63 +1,56 @@
 #gmail_connect.py
 
 import pytest
-from pages.login_page import LoginPage
-from pages.mailbox_page import MailboxPage
-from config.settings import USER_CREDENTIALS
+from basic_commands.mailbox_page import MailboxPage
 from dashboard_mailboxes.mailbox_credentials import GMAIL_CREDENTIALS
 
 class GmailConnect(MailboxPage):
 
-    def connect_mailbox(self, email, password):
-        mailbox_page = MailboxPage(self.driver, self.driver.current_url)
+    def __init__(self, driver, current_url):
+        self.mailbox_page = MailboxPage(driver, driver.current_url)
+
+    #@pytest.mark.valid
+    def connect_mailbox_success(self):
 
         # Connect gmail mailbox
-        mailbox_page.select_provider(GMAIL_CREDENTIALS["index"])
-        mailbox_page.enter_mailbox_email(email)
-        mailbox_page.enter_mailbox_password(password)
-        mailbox_page.enter_send_from_name()
-        mailbox_page.attach_mailbox()
+        self.mailbox_page.select_provider(GMAIL_CREDENTIALS["index"])
+        self.mailbox_page.enter_mailbox_email(GMAIL_CREDENTIALS['valid']['email'])
+        self.mailbox_page.enter_mailbox_password(GMAIL_CREDENTIALS['valid']['password'])
+        self.mailbox_page.enter_send_from_name()
+        self.mailbox_page.select_tariff_plan()
+        self.mailbox_page.attach_mailbox()
         # Check mailbox connection
-        if email == GMAIL_CREDENTIALS['valid']['email'] and password == GMAIL_CREDENTIALS['valid']['password']:
-            assert self.is_connect_success(email), f"Mailbox {email} should be connected"
-            # Disconnect gmail mailbox
-            self.disconnect_mailbox()
-            # Check mailbox disconnection
-            assert self.is_disconnect_success(email), f"Mailbox {email} should be disconnected"
-        elif email == GMAIL_CREDENTIALS['invalid']['email'] and password == GMAIL_CREDENTIALS['invalid']['password']:
-            assert self.is_connect_failed(), f"Mailbox {email} should not be connected"
+        assert self.mailbox_page.is_connect_success(
+            GMAIL_CREDENTIALS['valid']['email']), \
+            f"Mailbox {GMAIL_CREDENTIALS['valid']['email']} should be connected"
+        #self.connect_mailbox_existed()
+        # Disconnect gmail mailbox
+        self.mailbox_page.disconnect_mailbox()
+        # Check mailbox disconnection
+        assert self.mailbox_page.is_disconnect_success(
+            GMAIL_CREDENTIALS['valid']['email']), \
+            f"Mailbox {GMAIL_CREDENTIALS['valid']['email']} should be disconnected"
 
-"""
-#gmail_connect.py
-
-import pytest
-from pages.login_page import LoginPage
-from pages.mailbox_page import MailboxPage
-from config.settings import USER_CREDENTIALS
-from dashboard_mailboxes.mailbox_credentials import GMAIL_CREDENTIALS
-
-class GmailConnect(MailboxPage):
-
-    def connect_mailbox(self, email, password):
-        mailbox_page = MailboxPage(self.driver, self.driver.current_url)
-
+    #@pytest.mark.invalid
+    def connect_mailbox_failed(self):
         # Connect gmail mailbox
-        mailbox_page.select_provider(GMAIL_CREDENTIALS["index"])
-        mailbox_page.enter_mailbox_email(email)
-        mailbox_page.enter_mailbox_password(password)
-        mailbox_page.enter_send_from_name()
-        mailbox_page.attach_mailbox()
+        self.mailbox_page.select_provider(GMAIL_CREDENTIALS["index"])
+        self.mailbox_page.enter_mailbox_email(GMAIL_CREDENTIALS['valid']['email'])
+        self.mailbox_page.enter_mailbox_password(GMAIL_CREDENTIALS['invalid']['password'])
+        self.mailbox_page.enter_send_from_name()
+        #self.mailbox_page.attach_mailbox()
+        #assert self.mailbox_page.is_connect_without_tariff_failed(), \
+        #    f"Mailbox {GMAIL_CREDENTIALS['valid']['email']} should not be connected"
+        self.mailbox_page.select_tariff_plan()
+        #self.mailbox_page.enter_mailbox_email(GMAIL_CREDENTIALS['valid']['email'])
+        #self.mailbox_page.enter_mailbox_password(GMAIL_CREDENTIALS['invalid']['password'])
+        self.mailbox_page.attach_mailbox()
         # Check mailbox connection
-        if email == GMAIL_CREDENTIALS['valid']['email'] and password == GMAIL_CREDENTIALS['valid']['password']:
-            assert mailbox_page.is_connect_success(email), f"Mailbox {email} should be connected"
-            # Disconnect gmail mailbox
-            mailbox_page.disconnect_mailbox()
-            # Check mailbox disconnection
-            assert mailbox_page.is_disconnect_success(email), f"Mailbox {email} should be disconnected"
-        else:
-            assert mailbox_page.is_connect_failed(), f"Mailbox {email} should not be connected"
-namespace Other
-    class Connect
-    class WithoutImap
-    class SendridWithoutImap
-"""
+        assert self.mailbox_page.is_connect_invalid_failed(), \
+            f"Mailbox {GMAIL_CREDENTIALS['valid']['email']} should not be connected"
+        self.mailbox_page.enter_mailbox_email(GMAIL_CREDENTIALS['invalid']['email'])
+        self.mailbox_page.enter_mailbox_password(GMAIL_CREDENTIALS['valid']['password'])
+        self.mailbox_page.attach_mailbox()
+        # Check mailbox connection
+        assert self.mailbox_page.is_connect_invalid_failed(), \
+            f"Mailbox {GMAIL_CREDENTIALS['invalid']['email']} should not be connected"

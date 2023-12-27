@@ -1,7 +1,7 @@
 # test_login.py
 
 import pytest
-from pages.login_page import LoginPage
+from basic_commands.login_page import LoginPage
 from config.settings import USER_CREDENTIALS
 
 @pytest.mark.parametrize("email,password", [
